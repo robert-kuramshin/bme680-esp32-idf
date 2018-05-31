@@ -160,8 +160,8 @@ int8_t bus_read(uint8_t dev_addr, uint8_t reg_addr, uint8_t *reg_data_ptr, uint1
     
     i2c_master_start(cmd);
     i2c_master_write_byte(cmd, (dev_addr << 1) | I2C_MASTER_READ, ACK_CHECK_EN);
-    if (data_len > 1) i2c_master_read(cmd, reg_data_ptr, data_len-1, I2C_ACK_VAL);
-    i2c_master_read_byte(cmd, reg_data_ptr + data_len-1, I2C_NACK_VAL);
+    if (data_len > 1) i2c_master_read(cmd, reg_data_ptr, data_len-1, I2C_ACK);
+    i2c_master_read_byte(cmd, reg_data_ptr + data_len-1, I2C_NACK);
     i2c_master_stop(cmd);
     
     esp_err_t res = i2c_master_cmd_begin(0, cmd, 1000 / portTICK_RATE_MS);
@@ -275,14 +275,14 @@ uint32_t config_load(uint8_t *config_buffer, uint32_t n_buffer)
  *
  * @return      result of the processing
  */
-int app_main()
+void app_main()
 {
     return_values_init ret;
     
     i2c_config_t conf;
     conf.mode = I2C_MODE_MASTER;
-    conf.sda_io_num = I2C_SDA_PIN;
-    conf.scl_io_num = I2C_SCL_PIN;
+    conf.sda_io_num = I2C_SDA;
+    conf.scl_io_num = I2C_SCL;
     conf.sda_pullup_en = GPIO_PULLUP_ENABLE;
     conf.scl_pullup_en = GPIO_PULLUP_ENABLE;
     conf.master.clk_speed = I2C_FREQ;
