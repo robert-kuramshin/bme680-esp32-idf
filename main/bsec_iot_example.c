@@ -179,7 +179,7 @@ int8_t bus_read(uint8_t dev_addr, uint8_t reg_addr, uint8_t *reg_data_ptr, uint1
  *
  * @return          none
  */
-void sleep(uint32_t t_ms)
+void sleep_funct(uint32_t t_ms)
 {
     vTaskDelay(t_ms / portTICK_RATE_MS);
 }
@@ -215,7 +215,7 @@ int64_t get_timestamp_us()
 void output_ready(int64_t timestamp, float iaq, uint8_t iaq_accuracy, float temperature, float humidity,
      float pressure, float raw_temperature, float raw_humidity, float gas, bsec_library_return_t bsec_status)
 {
-    printf("%lu | temp: %f.2 | hum: %f | pres: %f.2 | iaq: %f \n",timestamp,temperature,humidity,pressure,iaq)
+    printf("temp: %.2f | hum: %.0f | pres: %.0f | iaq: %.0f \n",temperature,humidity,pressure,iaq);
 }
 
 /*!
@@ -294,7 +294,7 @@ void app_main()
 
     /* Call to the function which initializes the BSEC library 
      * Switch on low-power mode and provide no temperature offset */
-    ret = bsec_iot_init(BSEC_SAMPLE_RATE_LP, 0.0f, bus_write, bus_read, sleep, state_load, config_load);
+    ret = bsec_iot_init(BSEC_SAMPLE_RATE_LP, 0.0f, bus_write, bus_read, sleep_funct, state_load, config_load);
     if (ret.bme680_status)
     {
         printf("Could not intialize BME680\n");
@@ -306,7 +306,7 @@ void app_main()
     
     /* Call to endless loop function which reads and processes data based on sensor settings */
     /* State is saved every 10.000 samples, which means every 10.000 * 3 secs = 500 minutes  */
-    bsec_iot_loop(sleep, get_timestamp_us, output_ready, state_save, 10000);
+    bsec_iot_loop(sleep_funct, get_timestamp_us, output_ready, state_save, 10000);
 
 }
 
