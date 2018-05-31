@@ -91,13 +91,15 @@
 /* defines */
 /**********************************************************************************************************************/
 
-#define I2C_ACK  0x0
-#define I2C_NACK 0x1
+#define I2C_ACK      0x0
+#define I2C_NACK     0x1
 
-#define I2C_BUS       0
-#define I2C_SCL       14
-#define I2C_SDA       13
-#define I2C_FREQ      100000
+#define I2C_BUS      0
+#define I2C_SCL      14
+#define I2C_SDA      13
+#define I2C_FREQ     100000
+
+#define ACK_CHECK_EN 1
 
 /**********************************************************************************************************************/
 /* functions */
@@ -115,7 +117,7 @@
  */
 int8_t bus_write(uint8_t dev_addr, uint8_t reg_addr, uint8_t *reg_data_ptr, uint16_t data_len)
 {
-    i2c_cmd_hande_t cmd = 92c_cmd_link_create();
+    i2c_cmd_handle_t cmd = i2c_cmd_link_create();
 
     i2c_master_start(cmd);
     i2c_master_write_byte(cmd, (dev_addr) << 1 | I2C_MASTER_WRITE, ACK_CHECK_EN);
@@ -213,7 +215,7 @@ int64_t get_timestamp_us()
 void output_ready(int64_t timestamp, float iaq, uint8_t iaq_accuracy, float temperature, float humidity,
      float pressure, float raw_temperature, float raw_humidity, float gas, bsec_library_return_t bsec_status)
 {
-    printf("%d | temp: %f.2 | hum: %f | pres: %f.2 | iaq: %f \n",timestamp,temperature,humidity,pressure,iaq)
+    printf("%lu | temp: %f.2 | hum: %f | pres: %f.2 | iaq: %f \n",timestamp,temperature,humidity,pressure,iaq)
 }
 
 /*!
