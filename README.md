@@ -14,17 +14,17 @@ Nearly all of the implementation specific changes were made in bsec_iot_example.
 If you would like to update the API, or just download it yourself, you can download all you need from the Bosch website (https://www.bosch-sensortec.com/bst/products/all_products/bsec). Once you downloaded the package, here is where all the files you will need.
 
 /API  
-    bme680.c  
-    bme680.h  
-    bme680_defs.h  
+    * bme680.c  
+    * bme680.h  
+    * bme680_defs.h  
 /algo/bin/Normal_version/esp32  
-    bsec_datatypes.h  
-    bsec_interface.h  
-    libalgobsec.a  
+    * bsec_datatypes.h  
+    * bsec_interface.h  
+    * libalgobsec.a  
 /example  
-    bsec_integration.c  
-    bsec_integration.h  
-    bsec_iot_example.c (blank template)  
+    * bsec_integration.c  
+    * bsec_integration.h  
+    * bsec_iot_example.c (blank template)  
 
 Take these files and replace the ones found the main and components folders in this project. 
 
